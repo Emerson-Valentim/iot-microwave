@@ -1,0 +1,22 @@
+{
+  "name": "queue",
+  "packageManager": "yarn@3.4.1",
+  "main": "./build/index.js",
+  "files": [
+    "build"
+  ],
+  "exports": [
+    "build"
+  ],
+  "scripts": {
+    "build": "yarn tsc"
+  },
+  "devDependencies": {
+    "tsc": "^2.0.4",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "cache": "workspace:^",
+    "zod": "^3.20.6"
+  }
+}
