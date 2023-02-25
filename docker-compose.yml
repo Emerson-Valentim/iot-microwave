@@ -1,0 +1,40 @@
+version: '3.7'
+
+services:
+  magic:
+    hostname: magic
+    build:
+      context: .
+      dockerfile: ./docker/local.service.Dockerfile
+      args:
+        service: magic
+    environment:
+      - PORT=1000
+      - DB_URL=redis://redis:6379
+    command: npx nodemon build/index.js
+    ports:
+      - "1000:1000"
+    volumes:
+      - ./packages/magic/build:/usr/app/build
+    networks:
+      - private
+
+  redis:
+    hostname: redis
+    image: 'bitnami/redis:latest'
+    restart: always
+    ports:
+      - '6379:6379'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 1s
+      timeout: 3s
+      retries: 30
+    networks:
+      - private
+
+networks:
+  private:
+    driver: bridge

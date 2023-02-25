@@ -1,0 +1,11 @@
+{
+  "name": "microwave",
+  "packageManager": "yarn@3.4.1",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@types/node": "^18.14.1"
+  }
+}
