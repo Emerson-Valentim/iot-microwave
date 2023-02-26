@@ -42,27 +42,21 @@ const Queue = () => {
       <Table variant="simple">
         <Thead>
           <Tr>
-            <Th>ID</Th>
+            <Th>Status</Th>
             <Th>Note</Th>
             <Th>Requester</Th>
-            <Th isNumeric>{`Time (seconds)`}</Th>
-            <Th>Status</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {data.map(
-            ({ id, alias, requester, status, timeInSeconds }, index) => {
-              return (
-                <Tr key={`${index}-table-item`}>
-                  <Td>{id}</Td>
-                  <Td>{alias}</Td>
-                  <Td>{requester} (mm)</Td>
-                  <Td isNumeric>{timeInSeconds}</Td>
-                  <Td>{status}</Td>
-                </Tr>
-              );
-            }
-          )}
+          {data.map(({ alias, requester, status }, index) => {
+            return (
+              <Tr key={`${index}-table-item`}>
+                <Td>{status}</Td>
+                <Td>{alias}</Td>
+                <Td>{requester}</Td>
+              </Tr>
+            );
+          })}
         </Tbody>
       </Table>
     </TableContainer>
