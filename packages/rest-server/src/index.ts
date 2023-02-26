@@ -1,5 +1,6 @@
 import Koa from "koa";
 import Router, { Middleware } from "@koa/router";
+import cors from "@koa/cors";
 import bodyParser from "koa-bodyparser";
 
 export interface HandlerParams {
@@ -47,7 +48,7 @@ const rest = ({ port, routes, middlewares }: Server) => {
     await next();
   });
 
-  app.use(bodyParser());
+  app.use(bodyParser()).use(cors());
 
   middlewares?.forEach((middleware) => {
     app.use(middleware);

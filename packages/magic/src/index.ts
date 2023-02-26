@@ -46,7 +46,8 @@ rest({
           },
         },
         {
-          verb: "delete",
+          verb: "post",
+          subpath: "/finish",
           callback: async (ctx) => {
             try {
               ctx.response.body = await methods.finish();
