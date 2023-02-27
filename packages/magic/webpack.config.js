@@ -10,8 +10,11 @@ module.exports = {
 		rules: [
 			{
 				test: /\.ts?$/,
-				use: 'ts-loader',
+				loader: 'ts-loader',
 				exclude: /node_modules/,
+        options: {
+          transpileOnly: true,
+        },
 			},
 		],
 	},
@@ -19,6 +22,7 @@ module.exports = {
 		extensions: ['.ts', '.js'],
 	},
 	output: {
+    libraryTarget: "commonjs",
 		filename: 'index.js',
 		path: path.resolve(__dirname, 'build'),
 	},

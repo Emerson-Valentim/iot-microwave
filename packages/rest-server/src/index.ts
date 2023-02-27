@@ -1,4 +1,5 @@
 import Koa from "koa";
+import serverless from "serverless-http";
 import Router, { Middleware } from "@koa/router";
 import cors from "@koa/cors";
 import bodyParser from "koa-bodyparser";
@@ -61,7 +62,7 @@ const rest = ({ port, routes, middlewares }: Server) => {
   // eslint-disable-next-line no-console
   console.log(`Server running at ${port} 👾`);
 
-  return;
+  return app;
 };
 
-export { rest };
+export { rest, serverless };
