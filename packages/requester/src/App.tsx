@@ -9,8 +9,7 @@ function App() {
       display="flex"
       flexDirection="column"
       alignItems="center"
-      padding="10"
-      backgroundColor="grey"
+      margin="10"
       height="100vh"
     >
       <Auth />

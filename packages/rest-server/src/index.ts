@@ -40,12 +40,17 @@ const rest = ({ port, routes, middlewares }: Server) => {
 
   routes.forEach(({ path, handlers }) => {
     handlers.forEach(({ verb, subpath = "", callback }) => {
+      console.log(`Registering route: ${verb}:${path + subpath}`);
+
       router[verb](`${path}${subpath}`, callback);
     });
   });
 
   app.use(async (_, next) => {
-    console.log(`[${new Date().toISOString()}] Incoming request`);
+    console.log({
+      timestamp: new Date().toISOString(),
+      ..._.request.req,
+    });
     await next();
   });
 
@@ -60,7 +65,7 @@ const rest = ({ port, routes, middlewares }: Server) => {
   app.listen(port);
 
   // eslint-disable-next-line no-console
-  console.log(`Server running at ${port} 👾`);
+  console.log(`Server running at ${port ?? "🌥️"} 👾`);
 
   return app;
 };

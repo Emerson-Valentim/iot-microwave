@@ -9,7 +9,7 @@ const server = rest({
   port: process.env.PORT,
   routes: [
     {
-      path: "/microwave",
+      path: "/control",
       handlers: [
         {
           verb: "get",

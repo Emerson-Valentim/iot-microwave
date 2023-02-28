@@ -9,7 +9,7 @@ const client = new Axios({
 });
 
 const getQueue = () => {
-  return client.get("microwave");
+  return client.get("/");
 };
 
 const addItem = ({
@@ -21,14 +21,14 @@ const addItem = ({
   timeInSeconds: number;
   alias: string;
 }) => {
-  return client.post(
-    "microwave",
-    JSON.stringify({
+  return client.request({
+    method: "post",
+    data: JSON.stringify({
       requester,
       timeInSeconds,
       alias,
-    })
-  );
+    }),
+  });
 };
 
 export { getQueue, addItem };
