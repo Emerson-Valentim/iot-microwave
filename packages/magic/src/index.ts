@@ -1,11 +1,11 @@
 import { Queue } from "queue";
-import { rest } from "rest-server";
+import { rest, serverless } from "rest-server";
 
 const methods = Queue({
   dbUrl: process.env.DB_URL,
 });
 
-rest({
+const server = rest({
   port: process.env.PORT,
   routes: [
     {
@@ -69,3 +69,7 @@ rest({
     },
   ],
 });
+
+const handler = serverless(server);
+
+export { handler };

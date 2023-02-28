@@ -12,3 +12,12 @@
 
 build
 node_modules
+
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+lambda_function_payload.*
