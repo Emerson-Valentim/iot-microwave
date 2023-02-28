@@ -26,4 +26,9 @@ module "server" {
   }
   security_groups = [aws_security_group.server.id]
   subnet_ids      = module.vpc.private_subnets
+  redis_host      = aws_elasticache_replication_group.redis.primary_endpoint_address
+}
+
+module "frontend" {
+  source = "./resources/cdn"
 }

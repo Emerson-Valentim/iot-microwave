@@ -13,7 +13,7 @@ resource "aws_cloudwatch_log_group" "logs" {
 }
 
 resource "aws_iam_role" "iam_for_lambda" {
-  name = "microwave"
+  name               = "microwave"
   assume_role_policy = file("${path.module}/lambda-policy.json")
 }
 
@@ -40,7 +40,13 @@ resource "aws_lambda_function" "api_lambda" {
 
   vpc_config {
     security_group_ids = var.security_groups
-    subnet_ids = var.subnet_ids
+    subnet_ids         = var.subnet_ids
+  }
+
+  environment {
+    variables = {
+      DB_URL: "${var.redis_host}:6379"
+    }
   }
 }
 

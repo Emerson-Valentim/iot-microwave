@@ -1,10 +1,42 @@
 resource "aws_api_gateway_resource" "main" {
   rest_api_id = var.gateway.id
   parent_id   = var.gateway.root_resource_id
-  path_part   = var.service
+  path_part   = "{proxy+}"
 }
 
-resource "aws_api_gateway_method" "any" {
+resource "aws_api_gateway_method" "proxy_post" {
+  authorization = "NONE"
+  http_method   = "POST"
+  resource_id   = aws_api_gateway_resource.main.id
+  rest_api_id   = var.gateway.id
+}
+
+resource "aws_api_gateway_integration" "post" {
+  http_method             = aws_api_gateway_method.proxy_post.http_method
+  resource_id             = aws_api_gateway_resource.main.id
+  rest_api_id             = var.gateway.id
+  integration_http_method = "POST"
+  type                    = "AWS_PROXY"
+  uri                     = var.invoke_arn
+}
+
+resource "aws_api_gateway_method" "proxy_get" {
+  authorization = "NONE"
+  http_method   = "GET"
+  resource_id   = aws_api_gateway_resource.main.id
+  rest_api_id   = var.gateway.id
+}
+
+resource "aws_api_gateway_integration" "get" {
+  http_method             = aws_api_gateway_method.proxy_get.http_method
+  resource_id             = aws_api_gateway_resource.main.id
+  rest_api_id             = var.gateway.id
+  integration_http_method = "GET"
+  type                    = "AWS_PROXY"
+  uri                     = var.invoke_arn
+}
+
+resource "aws_api_gateway_method" "proxy_any" {
   authorization = "NONE"
   http_method   = "ANY"
   resource_id   = aws_api_gateway_resource.main.id
@@ -12,7 +44,7 @@ resource "aws_api_gateway_method" "any" {
 }
 
 resource "aws_api_gateway_integration" "any" {
-  http_method             = aws_api_gateway_method.any.http_method
+  http_method             = aws_api_gateway_method.proxy_any.http_method
   resource_id             = aws_api_gateway_resource.main.id
   rest_api_id             = var.gateway.id
   integration_http_method = "ANY"
@@ -25,8 +57,10 @@ resource "aws_api_gateway_deployment" "main" {
   stage_name  = "prd"
 
   depends_on = [
-    aws_api_gateway_method.any,
-    aws_api_gateway_integration.any
+    aws_api_gateway_method.proxy_post,
+    aws_api_gateway_integration.post,
+    aws_api_gateway_method.proxy_get,
+    aws_api_gateway_integration.get
   ]
 }
 
@@ -82,7 +116,7 @@ resource "aws_api_gateway_integration_response" "cors" {
 
   response_parameters = {
     "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-    "method.response.header.Access-Control-Allow-Methods" = "'OPTIONS,ANY,GET'",
+    "method.response.header.Access-Control-Allow-Methods" = "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'",
     "method.response.header.Access-Control-Allow-Origin"  = "'*'"
   }
 
@@ -90,10 +124,10 @@ resource "aws_api_gateway_integration_response" "cors" {
 }
 
 resource "aws_lambda_permission" "apigw_lambda_any" {
-  statement_id  = "AllowExecutionFromAPIGatewayAny"
+  statement_id  = "AllowExecutionFromApiGateway"
   action        = "lambda:InvokeFunction"
   function_name = var.function_name
   principal     = "apigateway.amazonaws.com"
 
-  source_arn = "${var.gateway.execution_arn}/*/${aws_api_gateway_method.any.http_method}/${var.service}"
+  source_arn = "${var.gateway.execution_arn}/*/*/*"
 }

@@ -9,7 +9,7 @@ resource "aws_api_gateway_rest_api" "main" {
 }
 
 resource "aws_api_gateway_domain_name" "main" {
-  domain_name              = "microwave.${local.domain}"
+  domain_name              = "api-microwave.${local.domain}"
   regional_certificate_arn = local.certificate_arn
   security_policy          = "TLS_1_2"
 
@@ -29,3 +29,4 @@ resource "aws_route53_record" "main" {
     zone_id                = aws_api_gateway_domain_name.main.regional_zone_id
   }
 }
+

@@ -9,3 +9,7 @@ variable "security_groups" {
 variable "subnet_ids" {
   type = any
 }
+
+variable "redis_host" {
+  type = string
+}
