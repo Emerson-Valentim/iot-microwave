@@ -9,7 +9,7 @@ env:
 
 jobs:
   deploy-lambda:
-    if: contains(github.ref, "magic")
+    if: contains(github.ref, 'magic')
     runs-on: ubuntu-latest
 
     steps:
@@ -43,7 +43,7 @@ jobs:
             --publish
 
   deploy-front:
-    if: contains(github.ref, "requester")
+    if: contains(github.ref, 'requester')
     runs-on: ubuntu-latest
 
     steps:
