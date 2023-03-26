@@ -1,0 +1,71 @@
+name: Deploy
+
+on:
+  release:
+    types: [prereleased]
+
+env:
+  REGION: sa-east-1
+
+jobs:
+  deploy-lambda:
+    if: contains(github.ref, "magic")
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{env.REGION}}
+
+      - name: Install
+        run: |
+          yarn
+
+      - name: Compile project
+        run: |
+          yarn build
+
+      - name: Zip release
+        run: |
+          zip -r -qq release.zip packages/magic/build
+
+      - name: Update lambda
+        run: |
+          aws lambda update-function-code \
+            --function-name microwave \
+            --zip-file fileb://release.zip \
+            --publish
+
+  deploy-front:
+    if: contains(github.ref, "requester")
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Create env file
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_REACT_APP_API_URL: https://api-microwave.evshosting.net/control
+
+      - name: Install dependencies 
+        run: yarn
+
+      - name: Build app
+        run: yarn build
+
+      - name: Deploy app
+        uses: shallwefootball/s3-upload-action@master
+        with:
+          aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_bucket: microwave-frontend
+          source_dir: "packages/requester/build"
+          destination_dir: "./"
