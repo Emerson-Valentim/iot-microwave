@@ -6,7 +6,7 @@ const Header: React.FC<{ onNewRequest: () => void }> = ({ onNewRequest }) => {
       <div
         style={{
           display: "flex",
-          width: "100%",
+          width: "-webkit-fill-available",
           justifyContent: "space-between",
           alignItems: "center",
           padding: "0px 12px",

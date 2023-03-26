@@ -6,16 +6,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #F0F4F9;
+  max-width: 99%;
+  display: flex;
+  justify-content: center;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-
-* , *:before, *:after{ 
-  box-sizing:border-box; 
-  -moz-box-sizing:border-box; 
-  -webkit-box-sizing:border-box; 
-  -ms-box-sizing:border-box;
 }

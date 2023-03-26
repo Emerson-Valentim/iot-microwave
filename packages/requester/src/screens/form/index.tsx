@@ -52,7 +52,12 @@ const Form: React.FC<{
       }}
       in={isOpen}
     >
-      <div style={{ padding: "12px", width: "-webkit-fill-available" }}>
+      <div
+        style={{
+          padding: "12px",
+          width: "-webkit-fill-available",
+        }}
+      >
         <Card>
           <div
             style={{
