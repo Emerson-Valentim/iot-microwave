@@ -2,6 +2,11 @@
   "name": "microwave",
   "packageManager": "yarn@3.4.1",
   "private": true,
+  "scripts": {
+    "clean:node_modules": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
+    "clean:build": "find . -name 'build' -type d -prune -exec rm -rf '{}' +",
+    "build": "yarn workspaces foreach -pt run build"
+  },
   "workspaces": [
     "packages/*"
   ],
@@ -9,6 +14,7 @@
     "@types/node": "^18.14.1"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.0.17",
     "axios": "^1.3.4"
   }
 }
