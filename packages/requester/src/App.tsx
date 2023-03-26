@@ -1,22 +1,35 @@
-import { Container, Divider } from "@chakra-ui/react";
-import React from "react";
+import {
+  Container,
+  Divider,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+} from "@chakra-ui/react";
+import { useState } from "react";
 import "./App.css";
-import { Queue, Auth, Form } from "./components";
+import { Form, Header, List } from "./screens";
 
 function App() {
+  const [isModalOpen, setModalOpen] = useState(true);
+
   return (
-    <Container
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      margin="10"
-      height="100vh"
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        height: "100vh",
+        padding: "12px",
+      }}
     >
-      <Auth />
-      <Queue />
-      <Divider size="l" />
-      <Form />
-    </Container>
+      <Header onNewRequest={() => setModalOpen(true)} />
+      <Divider />
+      <List />
+      <Form isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
+    </div>
   );
 }
 
