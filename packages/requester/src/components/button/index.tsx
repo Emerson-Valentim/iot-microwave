@@ -13,6 +13,7 @@ const Button: React.FC<{
 }> = ({ children, onClick, disabled, loading }) => {
   return (
     <CButton
+      width="100%"
       borderColor="transparent"
       onClick={onClick}
       disabled={disabled}

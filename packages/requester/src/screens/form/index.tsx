@@ -1,12 +1,12 @@
 import { CloseIcon } from "@chakra-ui/icons";
 import { Fade, FormControl } from "@chakra-ui/react";
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { Button, Card, Input, Spacer, Text } from "../../components";
 import { addItem } from "../../network/fetch";
 
 const Form: React.FC<{
   isOpen: boolean;
-  onClose: (state: boolean) => void;
+  onClose: () => void;
 }> = ({ isOpen, onClose }) => {
   const [loading, setLoading] = useState(false);
   const [alias, setAlias] = useState<string>("");
@@ -25,6 +25,10 @@ const Form: React.FC<{
         requester,
         timeInSeconds: +timeInSeconds,
       });
+
+      setAlias("");
+      setRequester("");
+      setTimeInSeconds(0);
 
       onClose();
     } finally {

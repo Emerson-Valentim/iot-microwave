@@ -6,6 +6,7 @@ const Header: React.FC<{ onNewRequest: () => void }> = ({ onNewRequest }) => {
       <div
         style={{
           display: "flex",
+          flexDirection: "column",
           width: "-webkit-fill-available",
           justifyContent: "space-between",
           alignItems: "center",
@@ -13,7 +14,14 @@ const Header: React.FC<{ onNewRequest: () => void }> = ({ onNewRequest }) => {
           gap: "16px",
         }}
       >
-        <div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "flex-start",
+          }}
+        >
           <Text variant="title.default" color="text.main.default">
             SmartDomotic
           </Text>
