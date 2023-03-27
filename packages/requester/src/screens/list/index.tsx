@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Badge, Card, Spacer, Text } from "../../components";
 import { getQueue } from "../../network/fetch";
 
-const Header = () => {
+const Header: React.FC = () => {
   const [data, setData] = useState<
     {
       id: string;
@@ -14,6 +14,8 @@ const Header = () => {
   >([]);
 
   useEffect(() => {
+    runGetQueue();
+
     const pooling = setInterval(() => {
       runGetQueue();
     }, 2000);
