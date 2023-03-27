@@ -34,7 +34,7 @@ resource "aws_lambda_function" "api_lambda" {
   filename      = data.archive_file.dummy.output_path
   function_name = "microwave"
   role          = aws_iam_role.iam_for_lambda.arn
-  handler       = "build/index.handler"
+  handler       = "packages/magic/build/index.handler"
 
   runtime = "nodejs18.x"
 
