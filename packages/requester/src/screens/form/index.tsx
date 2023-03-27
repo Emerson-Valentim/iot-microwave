@@ -25,6 +25,8 @@ const Form: React.FC<{
         requester,
         timeInSeconds: +timeInSeconds,
       });
+
+      onClose();
     } finally {
       setLoading(false);
     }
@@ -94,7 +96,7 @@ const Form: React.FC<{
             <Spacer variant="stack_medium" />
             <Input
               label="Your name"
-              placeholder="SBP"
+              placeholder="SPB"
               type="requester"
               onChange={readInputEvent(setRequester)}
               value={requester}
