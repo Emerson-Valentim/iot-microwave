@@ -66,7 +66,7 @@ const list = (client: Cache) => {
       key: QUEUE_KEY,
     });
 
-    return result.map((item) => JSON.parse(item));
+    return result.map((item) => JSON.parse(item)).reverse();
   };
 };
 
