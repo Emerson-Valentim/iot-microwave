@@ -1,9 +1,9 @@
+import { SpinnerIcon, StarIcon } from "@chakra-ui/icons";
 import { Badge as CBadge } from "@chakra-ui/react";
 import React from "react";
-import { tokens } from "../tokens";
-import { Text } from "../text";
-import { TimeIcon } from "@chakra-ui/icons";
 import { Spacer } from "../spacer";
+import { Text } from "../text";
+import { tokens } from "../tokens";
 
 const { colors } = tokens;
 
@@ -15,12 +15,12 @@ const Badge: React.FC<{
     PENDING: {
       backgroundColor: colors.surface.warning.default,
       textColor: "text.main.warning",
-      Icon: () => <TimeIcon />,
+      Icon: () => <SpinnerIcon />,
     },
     COOKING: {
       backgroundColor: colors.surface.highlight.default,
       textColor: "text.main.highLight",
-      Icon: () => <TimeIcon />,
+      Icon: () => <StarIcon />,
     },
   }[variant];
 

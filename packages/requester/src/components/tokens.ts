@@ -25,7 +25,7 @@ export const tokens = {
         subdued: "#475569",
         subtitle: "#243255",
         button: "#FFFFFF",
-        hightLight: "#0369A1",
+        highLight: "#0369A1",
         warning: "#B45309",
       },
     },
