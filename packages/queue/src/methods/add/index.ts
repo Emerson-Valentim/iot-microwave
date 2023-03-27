@@ -4,7 +4,7 @@ import { Database } from "../_ports";
 
 const validator = z.object({
   alias: z.string(),
-  timeInSeconds: z.number(),
+  timeInSeconds: z.number().min(1),
   requester: z.string(),
 });
 
