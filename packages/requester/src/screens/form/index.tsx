@@ -91,7 +91,7 @@ const Form: React.FC<{
           >
             <Input
               label="Event name"
-              type="alias"
+              type="text"
               placeholder="My meal"
               onChange={readInputEvent(setAlias)}
               value={alias}
@@ -101,7 +101,7 @@ const Form: React.FC<{
             <Input
               label="Your name"
               placeholder="SPB"
-              type="requester"
+              type="text"
               onChange={readInputEvent(setRequester)}
               value={requester}
               required
@@ -110,7 +110,7 @@ const Form: React.FC<{
             <Input
               label="Time"
               placeholder="15"
-              type="timeInSeconds"
+              type="number"
               onChange={readInputEvent(setTimeInSeconds)}
               required
               helperText="In seconds"

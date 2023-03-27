@@ -15,7 +15,7 @@ const Button: React.FC<{
     <CButton
       width="100%"
       borderColor="transparent"
-      onClick={onClick}
+      onClick={disabled ? undefined : onClick}
       disabled={disabled}
       isLoading={loading}
       _loading={{ backgroundColor: colors.action.primary.disabled }}
