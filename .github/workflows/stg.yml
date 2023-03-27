@@ -50,11 +50,6 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
 
-      - name: Create env file
-        uses: SpicyPizza/create-envfile@v1.3
-        with:
-          envkey_REACT_APP_API_URL: https://api-microwave.evshosting.net/control
-
       - name: Install dependencies 
         run: yarn
 

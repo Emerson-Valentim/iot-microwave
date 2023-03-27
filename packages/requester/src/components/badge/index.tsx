@@ -9,15 +9,15 @@ const { colors } = tokens;
 
 const Badge: React.FC<{
   children: React.ReactNode;
-  variant: "pending" | "active";
+  variant: "PENDING" | "COOKING";
 }> = ({ children, variant }) => {
   const { backgroundColor, textColor, Icon } = {
-    pending: {
+    PENDING: {
       backgroundColor: colors.surface.warning.default,
       textColor: "text.main.warning",
       Icon: () => <TimeIcon />,
     },
-    active: {
+    COOKING: {
       backgroundColor: colors.surface.highlight.default,
       textColor: "text.main.highLight",
       Icon: () => <TimeIcon />,
