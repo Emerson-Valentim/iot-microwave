@@ -8,55 +8,43 @@ env:
   REGION: sa-east-1
 
 jobs:
-  deploy-lambda:
-    if: contains(github.ref, 'magic')
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
 
-      - name: Configure AWS Credentials
+      - name: Setup AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{env.REGION}}
 
-      - name: Install
+      - name: Install dependencies
         run: |
           yarn
 
-      - name: Compile project
+      - name: Build project
         run: |
           yarn build
 
-      - name: Zip release
+      - name: Zip magic release
+        if: contains(github.ref, 'magic')
         run: |
           zip -r -qq release.zip packages/magic/build
 
-      - name: Update lambda
+      - name: Update magic lambda
+        if: contains(github.ref, 'magic')
         run: |
           aws lambda update-function-code \
             --function-name microwave \
             --zip-file fileb://release.zip \
             --publish
 
-  deploy-front:
-    if: contains(github.ref, 'requester')
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v2
-
-      - name: Install dependencies 
-        run: yarn
-
-      - name: Build app
-        run: yarn build
-
-      - name: Deploy app
+      - name: Update requester front
+        if: contains(github.ref, 'requester')
         uses: shallwefootball/s3-upload-action@master
         with:
           aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
