@@ -8,8 +8,7 @@ env:
   REGION: sa-east-1
 
 jobs:
-  deploy-lambda:
-    if: contains(github.ref, 'magic')
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,31 +31,20 @@ jobs:
           yarn build
 
       - name: Zip release
+        if: contains(github.ref, 'magic')
         run: |
           zip -r -qq release.zip packages/magic/build
 
       - name: Update lambda
+        if: contains(github.ref, 'magic')
         run: |
           aws lambda update-function-code \
             --function-name microwave \
             --zip-file fileb://release.zip \
             --publish
 
-  deploy-front:
-    if: contains(github.ref, 'requester')
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v2
-
-      - name: Install dependencies 
-        run: yarn
-
-      - name: Build app
-        run: yarn build
-
-      - name: Deploy app
+      - name: Update front
+        if: contains(github.ref, 'requester')
         uses: shallwefootball/s3-upload-action@master
         with:
           aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
