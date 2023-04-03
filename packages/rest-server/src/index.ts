@@ -46,15 +46,37 @@ const rest = ({ port, routes, middlewares }: Server) => {
     });
   });
 
-  app.use(async (_, next) => {
-    console.log({
-      timestamp: new Date().toISOString(),
-      ..._.request.req,
-    });
-    await next();
-  });
-
   app.use(bodyParser()).use(cors());
+  app.use((ctx, next) => {
+    const startedAt = new Date().toISOString();
+    const request: any = {
+      method: ctx.method,
+      path: ctx.path,
+      body: getObjectIfHasKeys(ctx.response.body),
+      headers: getObjectIfHasKeys(ctx.headers),
+      query: getObjectIfHasKeys(ctx.query),
+    };
+
+    return next()
+      .catch(() => {
+        if (!ctx.response.body) {
+          ctx.response.body = { message: "Internal server error" };
+          ctx.response.status = 500;
+        }
+      })
+      .finally(() => {
+        console.log(
+          JSON.stringify({
+            startedAt,
+            finishedAt: new Date().toISOString(),
+            request,
+            response: {
+              body: getObjectIfHasKeys(ctx.response.body),
+            },
+          })
+        );
+      });
+  });
 
   middlewares?.forEach((middleware) => {
     app.use(middleware);
@@ -68,6 +90,10 @@ const rest = ({ port, routes, middlewares }: Server) => {
   console.log(`Server running at ${port ?? "🌥️"} 👾`);
 
   return app;
+};
+
+const getObjectIfHasKeys = (data: unknown) => {
+  return Object.keys(data ?? {}).length ? data : undefined;
 };
 
 export { rest, serverless };
