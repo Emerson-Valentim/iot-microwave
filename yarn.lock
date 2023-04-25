@@ -6909,6 +6909,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"device@workspace:packages/device":
+  version: 0.0.0-use.local
+  resolution: "device@workspace:packages/device"
+  languageName: unknown
+  linkType: soft
+
 "didyoumean@npm:^1.2.2":
   version: 1.2.2
   resolution: "didyoumean@npm:1.2.2"
